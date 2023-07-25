@@ -72,4 +72,3 @@ taskTree = "com.dorongold.task-tree:2.1.1"
 graphqlClient = { id = "com.apollographql.apollo3", version.ref = "graphql-apollo" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 graphqlServer = { id = "com.expediagroup.graphql", version.ref = "graphql-server" }
-
