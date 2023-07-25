@@ -26,4 +26,4 @@ gitHooks {
     createHooks()
 }
 
-rootProject.name = "mp-plot-gql"
+rootProject.name = "kmm-plot-gql"
