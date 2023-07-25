@@ -13,6 +13,11 @@ plugins {
     alias(libs.plugins.npm.publish)
     alias(libs.plugins.publishOnCentral)
     alias(libs.plugins.taskTree)
+
+    // don't know how to apply platform specific plugins
+    // alias(libs.plugins.graphqlServer)
+    alias(libs.plugins.ktor)
+    alias(libs.plugins.graphqlClient)
 }
 
 // group = "org.danilopianini"
@@ -20,6 +25,10 @@ plugins {
 repositories {
     google()
     mavenCentral()
+}
+
+application {
+    mainClass.set("HelloWorldKt")
 }
 
 kotlin {
@@ -40,9 +49,23 @@ kotlin {
                 implementation(libs.bundles.kotest.common)
             }
         }
+        val jvmMain by getting {
+            dependencies {
+                implementation(libs.bundles.ktor.server)
+                implementation(libs.bundles.graphql.server)
+                implementation(libs.logback)
+            }
+        }
         val jvmTest by getting {
             dependencies {
                 implementation(libs.kotest.runner.junit5)
+            }
+        }
+        val jsMain by creating {
+            dependencies {
+                implementation(libs.apollo.runtime)
+                implementation(libs.kotlin.coroutines.core)
+                implementation(libs.letsplot.js)
             }
         }
         val nativeMain by creating {
