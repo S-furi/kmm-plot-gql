@@ -2,8 +2,8 @@ package server.schema.subscriptions
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Subscription
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import server.schema.models.Point
 import kotlin.random.Random
 
