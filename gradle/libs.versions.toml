@@ -2,6 +2,14 @@
 android-plugins = "7.0.0"
 kotest = "5.6.2"
 kotlin = "1.9.0"
+logback="1.4.8"
+ktor="2.3.2"
+graphql-server="6.5.3"
+graphql-server-ktor="7.0.0-alpha.6"
+graphql-apollo="4.0.0-alpha.2"
+kotlin-coroutine="1.7.2"
+letsplot-js="4.4.1"
+
 
 [libraries]
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
@@ -10,6 +18,21 @@ kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", ve
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "kotest" }
 kotlin-test-common = { module = "org.jetbrains.kotlin:kotlin-test-common", version.ref = "kotlin" }
 kotlin-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
+
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback"}
+
+ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
+ktor-server-websockets = { module = "io.ktor:ktor-server-websockets-jvm", version.ref = "ktor" }
+ktor-server-cors = { module = "io.ktor:ktor-server-cors-jvm", version.ref = "ktor" }
+ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson", version.ref = "ktor" }
+
+graphql-kotlin-server = { module = "com.expediagroup:graphql-kotlin-server", version.ref = "graphql-server" }
+graphql-kotlin-ktor-server = { module = "com.expediagroup:graphql-kotlin-ktor-server", version.ref = "graphql-server-ktor" }
+
+apollo-runtime = { module = "com.apollographql.apollo3:apollo-runtime", version.ref = "graphql-apollo" }
+kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutine"}
+letsplot-js = { module = "org.jetbrains.lets-plot:lets-plot-kotlin-js", version.ref = "letsplot-js" }
 
 [bundles]
 kotest-common = [
@@ -22,6 +45,19 @@ kotlin-testing-common = [
     "kotlin-test-annotations-common",
 ]
 
+ktor-server = [
+    "ktor-server-core",
+    "ktor-server-netty",
+    "ktor-server-websockets",
+    "ktor-server-cors",
+    "ktor-serialization-jackson",
+]
+
+graphql-server = [
+    "graphql-kotlin-server",
+    "graphql-kotlin-ktor-server",
+]
+
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotest-multiplatform = { id = "io.kotest.multiplatform", version.ref = "kotest" }
@@ -32,3 +68,8 @@ multiJvmTesting = "org.danilopianini.multi-jvm-test-plugin:0.5.4"
 npm-publish = "dev.petuska.npm.publish:3.4.0"
 publishOnCentral = "org.danilopianini.publish-on-central:5.0.10"
 taskTree = "com.dorongold.task-tree:2.1.1"
+
+graphqlClient = { id = "com.apollographql.apollo3", version.ref = "graphql-apollo" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
+graphqlServer = { id = "com.expediagroup.graphql", version.ref = "graphql-server" }
+
