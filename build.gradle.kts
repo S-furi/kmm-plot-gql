@@ -15,7 +15,7 @@ plugins {
     alias(libs.plugins.taskTree)
 }
 
-group = "org.danilopianini"
+// group = "org.danilopianini"
 
 repositories {
     google()
@@ -67,17 +67,6 @@ kotlin {
             staticLib()
         }
     }
-
-    linuxX64(nativeSetup)
-    linuxArm64(nativeSetup)
-
-    mingwX64(nativeSetup)
-
-    macosX64(nativeSetup)
-    macosArm64(nativeSetup)
-    ios(nativeSetup)
-    watchos(nativeSetup)
-    tvos(nativeSetup)
 
     targets.all {
         compilations.all {
@@ -135,7 +124,7 @@ signing {
 publishOnCentral {
     projectLongName.set("Template for Kotlin Multiplatform Project")
     projectDescription.set("A template repository for Kotlin Multiplatform projects")
-    repository("https://maven.pkg.github.com/danysk/${rootProject.name}".toLowerCase()) {
+    repository("https://maven.pkg.github.com/danysk/${rootProject.name}".lowercase()) {
         user.set("DanySK")
         password.set(System.getenv("GITHUB_TOKEN"))
     }
