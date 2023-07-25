@@ -1,7 +1,3 @@
-import org.danilopianini.gradle.mavencentral.JavadocJar
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import org.gradle.internal.os.OperatingSystem
-
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -10,14 +6,13 @@ plugins {
     alias(libs.plugins.gitSemVer)
     alias(libs.plugins.kotlin.qa)
     alias(libs.plugins.multiJvmTesting)
-    alias(libs.plugins.npm.publish)
-    alias(libs.plugins.publishOnCentral)
     alias(libs.plugins.taskTree)
 
-    // don't know how to apply platform specific plugins
-    // alias(libs.plugins.graphqlServer)
+    alias(libs.plugins.graphqlServer)
     alias(libs.plugins.ktor)
     alias(libs.plugins.graphqlClient)
+
+    application
 }
 
 repositories {
@@ -25,26 +20,36 @@ repositories {
     mavenCentral()
 }
 
-application {
-    mainClass.set("HelloWorldKt")
-}
-
 kotlin {
     jvm {
+        jvmToolchain(17)
+        withJava()
         compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
+            kotlinOptions.jvmTarget = "17"
         }
         testRuns["test"].executionTask.configure {
             useJUnitPlatform()
         }
     }
-
+    js(IR) {
+        binaries.executable()
+        browser {
+            commonWebpackConfig {
+                cssSupport {
+                    enabled.set(true)
+                }
+            }
+        }
+    }
     sourceSets {
-        val commonMain by getting { }
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.apollo.runtime)
+            }
+        }
         val commonTest by getting {
             dependencies {
-                implementation(libs.bundles.kotlin.testing.common)
-                implementation(libs.bundles.kotest.common)
+                implementation(kotlin("test"))
             }
         }
         val jvmMain by getting {
@@ -54,82 +59,46 @@ kotlin {
                 implementation(libs.logback)
             }
         }
-        val jvmTest by getting {
-            dependencies {
-                implementation(libs.kotest.runner.junit5)
-            }
-        }
-        val jsMain by creating {
+        val jvmTest by getting
+        val jsMain by getting {
             dependencies {
                 implementation(libs.apollo.runtime)
                 implementation(libs.kotlin.coroutines.core)
                 implementation(libs.letsplot.js)
             }
         }
-        val nativeMain by creating {
-            dependsOn(commonMain)
-        }
-        val nativeTest by creating {
-            dependsOn(commonTest)
-        }
+        val jsTest by getting
     }
+}
 
-    js(IR) {
-        browser()
-        nodejs()
-        binaries.library()
-    }
+application {
+    mainClass.set("GraphQLServerLauncherKt")
+}
 
-    val nativeSetup: KotlinNativeTarget.() -> Unit = {
-        compilations["main"].defaultSourceSet.dependsOn(kotlin.sourceSets["nativeMain"])
-        compilations["test"].defaultSourceSet.dependsOn(kotlin.sourceSets["nativeTest"])
-        binaries {
-            sharedLib()
-            staticLib()
-        }
-    }
+tasks.named<Copy>("jvmProcessResources") {
+    val jsBrowserDistribution = tasks.named("jsBrowserDistribution")
+    from(jsBrowserDistribution)
+}
 
-    targets.all {
-        compilations.all {
-            kotlinOptions {
-                allWarningsAsErrors = true
-            }
-        }
-    }
+tasks.named<JavaExec>("run") {
+    dependsOn(tasks.named<Jar>("jvmJar"))
+    classpath(tasks.named<Jar>("jvmJar"))
+}
 
-    val os = OperatingSystem.current()
-    val excludeTargets = when {
-        os.isLinux -> kotlin.targets.filterNot { "linux" in it.name }
-        os.isWindows -> kotlin.targets.filterNot { "mingw" in it.name }
-        os.isMacOsX -> kotlin.targets.filter { "linux" in it.name || "mingw" in it.name }
-        else -> emptyList()
-    }.mapNotNull { it as? KotlinNativeTarget }
-
-    configure(excludeTargets) {
-        compilations.configureEach {
-            cinterops.configureEach { tasks[interopProcessingTaskName].enabled = false }
-            compileTaskProvider.get().enabled = false
-            tasks[processResourcesTaskName].enabled = false
-        }
-        binaries.configureEach { linkTask.enabled = false }
-
-        mavenPublication {
-            tasks.withType<AbstractPublishToMaven>().configureEach {
-                onlyIf { publication != this@mavenPublication }
-            }
-            tasks.withType<GenerateModuleMetadata>().configureEach {
-                onlyIf { publication.get() != this@mavenPublication }
-            }
+apollo {
+    service("service") {
+        generateKotlinModels.set(true)
+        packageName.set("gql.client")
+        schemaFiles.from(file("src/commonMain/resources/graphql/schema.graphqls"))
+        srcDir("src/commonMain/resources/graphql")
+        outputDirConnection {
+            connectToKotlinSourceSet("commonMain")
         }
     }
 }
 
-tasks.dokkaJavadoc {
-    enabled = false
-}
-
-tasks.withType<JavadocJar>().configureEach {
-    val dokka = tasks.dokkaHtml.get()
-    dependsOn(dokka)
-    from(dokka.outputDirectory)
+ktlint {
+    filter {
+        exclude { element -> element.file.path.contains("generated/") }
+    }
 }
