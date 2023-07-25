@@ -1,4 +1,4 @@
-# mp-plot-gql
+# kmm-plot-gql
 A Kotlin Multiplatform application for web-rendering plots, with an underlying GraphQL client-server architecture.
 
 ## Architecture
