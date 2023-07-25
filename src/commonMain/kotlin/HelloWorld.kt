@@ -1,3 +1,2 @@
-fun main() {
-    println("Hello, ${Platform.name}!")
-}
+
+fun main() = println("HelloWorld!")
