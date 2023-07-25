@@ -6,3 +6,5 @@ bin
 kotlin-js-store
 *.hprof
 local.properties
+
+.DS_Store/
