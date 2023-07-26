@@ -1,7 +1,27 @@
 package client
 
+import com.apollographql.apollo3.ApolloCall
+import com.apollographql.apollo3.api.Mutation
+import com.apollographql.apollo3.api.Query
+import com.apollographql.apollo3.api.Subscription
+
 interface GraphQLClient {
     fun builder(): GraphQLClientBuilder
+
+    /*
+    * Wrapper around ApolloClient query command for execute queries.
+    */
+    fun <D : Query.Data> query(query: Query<D>): ApolloCall<D>
+
+    /*
+    * Wrapper around ApolloClient mutation command for execute mutations.
+    */
+    fun <D : Mutation.Data> mutation(mutation: Mutation<D>): ApolloCall<D>
+
+    /*
+    * Wrapper around ApolloClient subscription command for execute subscriptions.
+    */
+    fun <D : Subscription.Data> subscription(subscription: Subscription<D>): ApolloCall<D>
 }
 
 /**
