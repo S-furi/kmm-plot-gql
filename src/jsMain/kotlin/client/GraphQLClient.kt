@@ -8,17 +8,17 @@ import com.apollographql.apollo3.api.Subscription
 interface GraphQLClient {
     fun builder(): GraphQLClientBuilder
 
-    /*
+    /**
     * Wrapper around ApolloClient query command for execute queries.
     */
     fun <D : Query.Data> query(query: Query<D>): ApolloCall<D>
 
-    /*
+    /**
     * Wrapper around ApolloClient mutation command for execute mutations.
     */
     fun <D : Mutation.Data> mutation(mutation: Mutation<D>): ApolloCall<D>
 
-    /*
+    /**
     * Wrapper around ApolloClient subscription command for execute subscriptions.
     */
     fun <D : Subscription.Data> subscription(subscription: Subscription<D>): ApolloCall<D>
@@ -31,7 +31,7 @@ interface GraphQLClient {
 interface GraphQLClientBuilder {
     var isSubscriptionModuleEnabled: Boolean
 
-    /*
+    /**
     * Sets the server URL, if nothing is specified, default values will apply for local host.
     */
     fun serverUrl(host: String = "localhost", port: Int = 8080): GraphQLClientBuilder
@@ -47,7 +47,7 @@ interface GraphQLClientBuilder {
      */
     fun addSubscriptionModule(): GraphQLClientBuilder
 
-    /*
+    /**
     * Get the built client.
     */
     fun build(): GraphQLClient
