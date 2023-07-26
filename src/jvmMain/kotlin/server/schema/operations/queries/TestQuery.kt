@@ -1,4 +1,4 @@
-package server.schema.queries
+package server.schema.operations.queries
 
 import com.expediagroup.graphql.server.operations.Query
 

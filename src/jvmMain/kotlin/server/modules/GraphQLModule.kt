@@ -11,8 +11,8 @@ import io.ktor.server.plugins.compression.Compression
 import io.ktor.server.plugins.compression.gzip
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.websocket.WebSockets
-import server.schema.queries.TestQuery
-import server.schema.subscriptions.PointSubscription
+import server.schema.operations.queries.TestQuery
+import server.schema.operations.subscriptions.PointSubscription
 
 fun Application.graphQLModule() {
     install(WebSockets) {

@@ -1,4 +1,4 @@
-package server.schema.subscriptions
+package server.schema.operations.subscriptions
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Subscription
