@@ -1,6 +1,6 @@
 
-import client.DefaultGraphQLClient
-import client.GraphQLClient
+import client.graphql.DefaultGraphQLClient
+import client.graphql.GraphQLClient
 import com.apollographql.apollo3.api.Optional
 import gql.client.PointsSubscription
 import kotlinx.browser.document
@@ -42,6 +42,7 @@ fun createContext() {
             }
             .collect()
     }
+    apolloClient.close()
 }
 
 fun addPlotToDiv(p: Figure) {

@@ -1,4 +1,4 @@
-package client
+package client.graphql
 
 import com.apollographql.apollo3.ApolloCall
 import com.apollographql.apollo3.ApolloClient
