@@ -19,3 +19,35 @@ through a graphql [subscription](https://graphql.org/blog/subscriptions-in-graph
 The client that subscribes to this, can specify a number of points to collect, real-time plotting
 those points in a cartesian plane, and when the collections is finished, drawing a polinomial regression
 line upon those points collected.
+
+## Instructions
+Build the entire project with:
+```bash
+./gradlew build
+```
+
+You can then run the server, making sure **port 8080** is not already in use, with:
+```bash
+./gradlew run
+```
+
+At this point, you can run the web demo in two ways:
+- Exectuing the gradle task `./gradlew jsBrowserRun`
+- Opening the `index.html` file located in `build/dist/js/productionExecutable/index.html` in
+  your preferred browser.
+
+### Changes to the schema
+The current schema is located in the
+[`src/commonMain/resources/graphql/schema.graphqls`](src/commonMain/resources/graphql/schema.graphqls).
+If changes to schema are made, the client needs to stay up to date with it.
+
+You can download it **while the server** is **up and running** with:
+```bash
+./gradlew downloadApolloSchema --endpoint='http://localhost:8080/graphql' --schema=src/commonMain/resources/graphql/schema.graphqls
+```
+If you then rebuild the project, all the compiled schema class will be generated,
+or you can use the gradle task:
+```bash
+./gradlew generateApolloSources
+```
+To generate the schema classes.
