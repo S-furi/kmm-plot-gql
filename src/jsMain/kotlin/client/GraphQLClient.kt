@@ -22,6 +22,8 @@ interface GraphQLClient {
     * Wrapper around ApolloClient subscription command for execute subscriptions.
     */
     fun <D : Subscription.Data> subscription(subscription: Subscription<D>): ApolloCall<D>
+
+    fun close(): Unit
 }
 
 /**

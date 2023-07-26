@@ -38,6 +38,8 @@ class DefaultGraphQLClient(private val client: ApolloClient) : GraphQLClient {
         return client.subscription(subscription)
     }
 
+    override fun close() = client.close()
+
     private fun checkBuilt() = if (!isBuilt) throw ClientNotBuiltException() else true
 
     class Builder : GraphQLClientBuilder {
