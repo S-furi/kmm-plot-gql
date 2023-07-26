@@ -33,7 +33,6 @@ fun createContext() {
                     data["x"]?.add(point.x)
                     data["y"]?.add(point.y)
                 }
-                println(it.data?.randomPoints)
                 addPlotToDiv(getPlot(data))
             }
             .onCompletion {
@@ -46,9 +45,10 @@ fun createContext() {
 }
 
 fun addPlotToDiv(p: Figure) {
-    val contentDiv = document.getElementById("content")
-    contentDiv?.clear()
-    contentDiv?.appendChild(JsFrontendUtil.createPlotDiv(p))
+    document.getElementById("plot")?.apply {
+        clear()
+        appendChild(JsFrontendUtil.createPlotDiv(p))
+    }
 }
 
 fun getPlot(data: Map<String, Any>, xx: String = "x", yy: String = "y") =
