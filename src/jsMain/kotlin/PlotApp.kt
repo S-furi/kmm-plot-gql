@@ -1,5 +1,6 @@
 
 import client.DefaultGraphQLClient
+import client.GraphQLClient
 import com.apollographql.apollo3.api.Optional
 import gql.client.PointsSubscription
 import kotlinx.browser.document
@@ -16,8 +17,8 @@ import org.jetbrains.letsPlot.geom.geomPoint
 import org.jetbrains.letsPlot.geom.geomSmooth
 import org.jetbrains.letsPlot.letsPlot
 
-private val apolloClient = DefaultGraphQLClient.Builder().serverUrl(port = 8082).build().client
-
+private val apolloClient: GraphQLClient =
+    DefaultGraphQLClient.Builder().serverUrl().addSubscriptionModule().build()
 fun main() {
     window.onload = { createContext() }
 }

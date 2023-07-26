@@ -49,7 +49,7 @@ fun Application.graphQLModule() {
     install(Routing) {
         graphQLGetRoute()
         graphQLPostRoute()
-        graphQLSubscriptionsRoute("ws://localhost:8082/graphql")
+        graphQLSubscriptionsRoute()
         graphiQLRoute()
         graphQLSDLRoute()
     }
