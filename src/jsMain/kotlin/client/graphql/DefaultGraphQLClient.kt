@@ -55,6 +55,13 @@ class DefaultGraphQLClient(private val client: ApolloClient) : GraphQLClient {
             apolloClientBuilder.serverUrl("http://$url/graphql")
         }
 
+        override fun serverUrl(origin: String): GraphQLClientBuilder = apply {
+            // Not the best approach...
+            val (host, port) = """[a-zA-z].*://(.*):(\d+)/?""".toRegex().find(origin)!!.destructured
+            url = "$host:$port"
+            apolloClientBuilder.serverUrl("$origin/graphql")
+        }
+
         override fun addSubscriptionModule(): Builder = apply {
             if (url == null) {
                 throw IllegalStateException("You must provide a url before setting up subscription module")

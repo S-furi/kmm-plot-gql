@@ -35,8 +35,18 @@ interface GraphQLClientBuilder {
 
     /**
      * Sets the server URL, if nothing is specified, default values will apply for local host.
+     *
+     * @param host hostname of the server, default to "localhost"
+     * @param port port number of the server, default to "8080"
      */
     fun serverUrl(host: String = "localhost", port: Int = 8080): GraphQLClientBuilder
+
+    /**
+     * Sets the server URL, if nothing is specified, default values will apply for local host.
+     *
+     * @param origin full server URL, e.g. "http://localhost:8080"
+     */
+    fun serverUrl(origin: String): GraphQLClientBuilder
 
     /**
      *
