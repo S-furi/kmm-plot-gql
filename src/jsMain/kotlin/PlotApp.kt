@@ -39,10 +39,10 @@ fun createContext() {
                 println("Done Collecting")
                 val finalPlot = getPlot(data) + geomSmooth(deg = 3)
                 addPlotToDiv(finalPlot)
+                apolloClient.close()
             }
             .collect()
     }
-    apolloClient.close()
 }
 
 fun addPlotToDiv(p: Figure) {
