@@ -31,10 +31,11 @@ class DefaultGraphQLClient(private val client: ApolloClient) : GraphQLClient {
 
     override fun <D : Subscription.Data> subscription(subscription: Subscription<D>): ApolloCall<D> {
         checkBuilt()
-        if (!isSubscriptionModuleEnabled)
+        if (!isSubscriptionModuleEnabled) {
             throw IllegalStateException(
-                "Subscription module were not enabled. Add it to the client calling `addSubscriptionModule()`."
+                "Subscription module were not enabled. Add it to the client calling `addSubscriptionModule()`.",
             )
+        }
         return client.subscription(subscription)
     }
 
@@ -63,7 +64,7 @@ class DefaultGraphQLClient(private val client: ApolloClient) : GraphQLClient {
                     .serverUrl("ws://$url/subscriptions")
                     // specifying "graphql-ws" protocol
                     .protocol(GraphQLWsProtocol.Factory())
-                    .build()
+                    .build(),
             )
 
             isSubscriptionModuleEnabled = true
