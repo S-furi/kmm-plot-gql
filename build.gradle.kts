@@ -34,11 +34,13 @@ kotlin {
     js(IR) {
         binaries.executable()
         browser {
-            commonWebpackConfig {
-                cssSupport {
-                    enabled.set(true)
-                }
-            }
+            commonWebpackConfig(
+                Action {
+                    cssSupport {
+                        enabled.set(true)
+                    }
+                },
+            )
         }
     }
     sourceSets {
