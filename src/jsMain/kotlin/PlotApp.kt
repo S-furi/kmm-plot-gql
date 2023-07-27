@@ -15,7 +15,10 @@ import org.jetbrains.letsPlot.Figure
 import org.jetbrains.letsPlot.frontend.JsFrontendUtil
 import org.jetbrains.letsPlot.geom.geomPoint
 import org.jetbrains.letsPlot.geom.geomSmooth
+import org.jetbrains.letsPlot.ggsize
 import org.jetbrains.letsPlot.letsPlot
+import org.jetbrains.letsPlot.scale.xlim
+import org.jetbrains.letsPlot.scale.ylim
 
 private val apolloClient: GraphQLClient =
     DefaultGraphQLClient.Builder().serverUrl(window.location.origin).addSubscriptionModule().build()
@@ -58,6 +61,10 @@ fun getPlot(data: Map<String, Any>, xx: String = "x", yy: String = "y") =
     letsPlot(data) {
         x = xx
         y = yy
-    } + geomPoint(color = "red", size = 4.0)
+    } +
+        geomPoint(color = "red", size = 4.0) +
+        xlim(Pair(0, 100)) +
+        ylim(Pair(0, 100)) +
+        ggsize(700, 350)
 
 fun getData() = apolloClient.subscription(PointsSubscription(Optional.present(10))).toFlow()
