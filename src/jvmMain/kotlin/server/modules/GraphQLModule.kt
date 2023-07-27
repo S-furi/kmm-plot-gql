@@ -21,7 +21,7 @@ fun Application.graphQLModule() {
     }
 
     install(CORS) {
-        anyHost() // to remove in production.
+        anyHost()
     }
 
     install(Compression) {
