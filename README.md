@@ -26,15 +26,11 @@ Build the entire project with:
 ./gradlew build
 ```
 
-You can then run the server, making sure **port 8080** is not already in use, with:
+You can then run the server and the application, making sure **port 8080** is not already in use, with:
 ```bash
 ./gradlew run
 ```
-
-At this point, you can run the web demo in two ways:
-- Exectuing the gradle task `./gradlew jsBrowserRun`
-- Opening the `index.html` file located in `build/dist/js/productionExecutable/index.html` in
-  your preferred browser.
+The default browser should open, running the demo.
 
 ### Changes to the schema
 The current schema is located in the
