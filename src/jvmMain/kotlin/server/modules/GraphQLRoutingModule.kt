@@ -7,6 +7,7 @@ import com.expediagroup.graphql.server.ktor.graphQLSubscriptionsRoute
 import com.expediagroup.graphql.server.ktor.graphiQLRoute
 import io.ktor.server.application.Application
 import io.ktor.server.routing.routing
+import server.routes.resourceRoute
 
 fun Application.graphQLRoutingModule() {
     routing {
@@ -15,5 +16,6 @@ fun Application.graphQLRoutingModule() {
         graphQLSubscriptionsRoute()
         graphiQLRoute()
         graphQLSDLRoute()
+        resourceRoute()
     }
 }
