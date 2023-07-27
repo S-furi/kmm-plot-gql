@@ -39,7 +39,8 @@ fun createContext() {
                 println("Done Collecting")
                 val finalPlot = getPlot(data) + geomSmooth(deg = 3)
                 addPlotToDiv(finalPlot)
-                apolloClient.close()
+                // closing the client produces an exception, need to investigate...
+                // apolloClient.close()
             }
             .collect()
     }
