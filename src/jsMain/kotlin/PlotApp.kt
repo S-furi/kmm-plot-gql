@@ -18,7 +18,8 @@ import org.jetbrains.letsPlot.geom.geomSmooth
 import org.jetbrains.letsPlot.letsPlot
 
 private val apolloClient: GraphQLClient =
-    DefaultGraphQLClient.Builder().serverUrl().addSubscriptionModule().build()
+    DefaultGraphQLClient.Builder().serverUrl(window.location.origin).addSubscriptionModule().build()
+
 fun main() {
     window.onload = { createContext() }
 }
